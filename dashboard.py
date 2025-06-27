@@ -11,7 +11,14 @@ import pandas as pd
 import os
 
 # Importa a função de coleta e o nome do arquivo do banco de dados
-import coletor_trends
+try:
+    import coletor_trends
+except Exception as e:
+    st.error("FALHA CRÍTICA AO CARREGAR O MÓDULO DE COLETA DE DADOS.")
+    st.error("Isso geralmente ocorre por um problema em uma das bibliotecas ou um erro de sintaxe no arquivo 'coletor_trends.py'.")
+    st.subheader("Erro Original:")
+    st.exception(e) # Exibe o traceback completo do erro real.
+    st.stop()
 # Mantém as funções de visualização, mas agora o DB_FILE vem do coletor
 from visualizador import listar_categorias, buscar_dados_categoria
 
