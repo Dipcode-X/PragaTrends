@@ -22,12 +22,12 @@ CATEGORIAS_PRAGAS = {
     'Ratos': ['rato', 'ratos', 'ratazana', 'ratazanas'],
     'Baratas': ['barata', 'baratas', 'barata de esgoto', 'baratas de esgoto'],
     'Formigas': ['formiga', 'formigas', 'formiga cortadeira', 'formigas cortadeiras'],
-    'Escorpiões': ['escorpião', 'escorpiões', 'escorpião amarelo', 'escorpiões amarelos', 'escorpião marrom', 'escorpiões marrons'],
-    'Aranhas': ['aranha', 'aranhas', 'aranha marrom', 'aranhas marrons', 'armadeira', 'armadeiras']
+    'Escorpiões': ['escorpião', 'escorpiões', 'escorpião amarelo', 'escorpião marrom'],
+    'Aranhas': ['aranha', 'aranhas', 'aranha marrom', 'armadeira']
 }
 GEOLOCATION = 'BR'
 TIMEFRAME = '2020-01-01 2025-06-27' # Período de tempo (dados semanais de 2020 até hoje) para uma análise mais ampla
-DB_FILE = 'tendencias_pragas_v3.db' # Força a recriação do banco de dados
+DB_FILE = 'tendencias_pragas_v4.db' # Força a recriação do banco de dados
 
 def iniciar_banco(db_file):
     """Cria e configura o banco de dados SQLite e a tabela 'trends'."""
