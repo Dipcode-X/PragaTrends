@@ -18,15 +18,17 @@ from visualizador import listar_categorias, buscar_dados_categoria
 # --- Função para garantir que os dados existem ---
 def garantir_dados_locais():
     """Verifica se o banco de dados existe. Se não, executa a coleta."""
-    # Usa a variável DB_FILE do script coletor como fonte da verdade
-    if not os.path.exists(coletor_trends.DB_FILE):
-        st.info("Primeira execução ou banco de dados não encontrado.")
-        st.warning("Iniciando a coleta de dados do Google Trends. Isso pode levar alguns minutos...")
-        with st.spinner('Coletando e salvando dados... Por favor, aguarde.'):
-            coletor_trends.main() # Executa a função de coleta
-        st.success("Coleta de dados concluída!")
-        st.balloons()
-        st.rerun() # Recarrega o script para exibir o dashboard com os dados
+    db_path = coletor_trends.DB_FILE
+    if not os.path.exists(db_path):
+        try:
+            with st.spinner('Primeira execução: Coletando dados iniciais do Google Trends. Isso pode levar alguns minutos...'):
+                coletor_trends.main()
+            st.success('Coleta de dados concluída! O dashboard será recarregado.')
+            st.rerun()
+        except Exception as e:
+            st.error(f"Ocorreu um erro crítico durante a coleta de dados: {e}")
+            st.error("Por favor, verifique os logs do aplicativo no menu 'Manage app' para mais detalhes.")
+            st.stop()
 
 # --- Configuração da Página do Dashboard ---
 st.set_page_config(
