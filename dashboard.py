@@ -48,7 +48,7 @@ def carregar_dados(categoria):
 
 # --- Interface do Usuário (UI) ---
 st.title("📈 Dashboard de Tendências de Pragas")
-st.markdown("Explore o interesse de busca por diferentes pragas no Brasil ao longo do tempo.")
+st.markdown("Interesse de busca por diferentes pragas no Brasil ao longo do tempo.")
 
 # --- Barra Lateral com Controles ---
 st.sidebar.header("Filtros")
