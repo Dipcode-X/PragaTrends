@@ -27,7 +27,7 @@ CATEGORIAS_PRAGAS = {
 }
 GEOLOCATION = 'BR'
 TIMEFRAME = '2020-01-01 2025-06-27' # Período de tempo (dados semanais de 2020 até hoje) para uma análise mais ampla
-DB_FILE = 'tendencias_pragas.db' # Novo nome para o banco de dados
+DB_FILE = 'tendencias_pragas_v2.db' # Força a recriação do banco de dados
 
 def iniciar_banco(db_file):
     """Cria e configura o banco de dados SQLite e a tabela 'trends'."""
