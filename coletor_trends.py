@@ -82,9 +82,9 @@ def buscar_dados_trends(termos, geo, timeframe, retries=3, initial_delay=10):
                     print(f"Ocorreu um erro ao buscar os dados no Google Trends: {e}")
                     return None # Falhou em todas as tentativas
             else:
-                # Para outros tipos de erro, não tenta novamente
+                # Para outros tipos de erro, não tenta novamente e propaga a exceção.
                 print(f"Ocorreu um erro inesperado ao buscar os dados no Google Trends: {e}")
-                return None
+                raise e # Re-levanta a exceção para que ela seja tratada nos níveis superiores.
     return None
 
 def salvar_dados_no_banco(df, categoria, geolocation, db_file):
