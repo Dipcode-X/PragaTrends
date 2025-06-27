@@ -77,7 +77,7 @@ def buscar_dados_trends(termos, geo, timeframe, retries=3, initial_delay=10):
                 if attempt < retries - 1:
                     delay = initial_delay * (2 ** attempt) # Espera progressiva
                     print(f"Erro 429 (Too Many Requests). Tentando novamente em {delay} segundos...")
-                    sleep(delay)
+                    time.sleep(delay)
                 else:
                     print(f"Ocorreu um erro ao buscar os dados no Google Trends: {e}")
                     return None # Falhou em todas as tentativas
@@ -118,8 +118,8 @@ def salvar_dados_no_banco(df, categoria, geolocation, db_file):
     except Exception as e:
         print(f"Ocorreu um erro ao salvar os dados da categoria '{categoria}': {e}")
 
-# --- Bloco de Execução Principal ---
-if __name__ == "__main__":
+def main():
+    """Função principal que orquestra todo o processo de coleta de dados."""
     print("Iniciando processo de coleta de dados de pragas...")
 
     print("\n1. Configurando o banco de dados...")
@@ -143,3 +143,7 @@ if __name__ == "__main__":
         time.sleep(5)
 
     print("\nProcesso de coleta concluído.")
+
+# --- Bloco de Execução Principal ---
+if __name__ == "__main__":
+    main()

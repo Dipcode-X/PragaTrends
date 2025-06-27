@@ -8,9 +8,25 @@ Permite ao usuário selecionar a categoria da praga e o período de análise.
 import streamlit as st
 import plotly.express as px
 import pandas as pd
+import os
 
-# Importa as funções que já criamos para interagir com o banco de dados
-from visualizador import listar_categorias, buscar_dados_categoria, DB_FILE
+# Importa a função de coleta e o nome do arquivo do banco de dados
+import coletor_trends
+# Mantém as funções de visualização, mas agora o DB_FILE vem do coletor
+from visualizador import listar_categorias, buscar_dados_categoria
+
+# --- Função para garantir que os dados existem ---
+def garantir_dados_locais():
+    """Verifica se o banco de dados existe. Se não, executa a coleta."""
+    # Usa a variável DB_FILE do script coletor como fonte da verdade
+    if not os.path.exists(coletor_trends.DB_FILE):
+        st.info("Primeira execução ou banco de dados não encontrado.")
+        st.warning("Iniciando a coleta de dados do Google Trends. Isso pode levar alguns minutos...")
+        with st.spinner('Coletando e salvando dados... Por favor, aguarde.'):
+            coletor_trends.main() # Executa a função de coleta
+        st.success("Coleta de dados concluída!")
+        st.balloons()
+        st.rerun() # Recarrega o script para exibir o dashboard com os dados
 
 # --- Configuração da Página do Dashboard ---
 st.set_page_config(
@@ -19,10 +35,13 @@ st.set_page_config(
     layout="wide"
 )
 
+# Garante que os dados existem antes de tentar desenhar o dashboard
+garantir_dados_locais()
+
 # --- Funções do Dashboard ---
 def carregar_dados(categoria):
     """Carrega os dados para uma categoria e os armazena em cache para performance."""
-    df = buscar_dados_categoria(categoria, DB_FILE)
+    df = buscar_dados_categoria(categoria, coletor_trends.DB_FILE)
     if not df.empty:
         df['data'] = pd.to_datetime(df['data'])
     return df
@@ -35,7 +54,7 @@ st.markdown("Explore o interesse de busca por diferentes pragas no Brasil ao lon
 st.sidebar.header("Filtros")
 
 # 1. Seleção de Categoria
-categorias_disponiveis = listar_categorias(DB_FILE)
+categorias_disponiveis = listar_categorias(coletor_trends.DB_FILE)
 if not categorias_disponiveis:
     st.warning("Nenhuma categoria encontrada no banco de dados. Execute o `coletor_trends.py`.")
     st.stop()
