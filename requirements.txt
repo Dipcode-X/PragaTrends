@@ -1,5 +1,4 @@
-pandas
-pytrends
-matplotlib
 streamlit
+pandas
 plotly
+pytrends
