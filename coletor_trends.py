@@ -121,28 +121,32 @@ def salvar_dados_no_banco(df, categoria, geolocation, db_file):
 def main():
     """Função principal que orquestra todo o processo de coleta de dados."""
     print("Iniciando processo de coleta de dados de pragas...")
-
     print("\n1. Configurando o banco de dados...")
     iniciar_banco(DB_FILE)
 
-    # Loop para buscar dados para cada categoria de praga
-    for categoria, keywords in CATEGORIAS_PRAGAS.items():
-        print(f"\n--- Processando categoria: {categoria} ---")
-        
-        print(f"2. Buscando dados para os termos: {keywords}...")
-        trends_df = buscar_dados_trends(keywords, GEOLOCATION, TIMEFRAME)
+    try:
+        # Loop para buscar dados para cada categoria de praga
+        for categoria, keywords in CATEGORIAS_PRAGAS.items():
+            print(f"\n--- Processando categoria: {categoria} ---")
+            
+            print(f"2. Buscando dados para os termos: {keywords}...")
+            trends_df = buscar_dados_trends(keywords, GEOLOCATION, TIMEFRAME)
 
-        if trends_df is not None and not trends_df.empty:
-            print("3. Salvando dados no banco...")
-            salvar_dados_no_banco(trends_df, categoria, GEOLOCATION, DB_FILE)
-        else:
-            print(f"Nenhum dado encontrado para a categoria '{categoria}'. Pulando para a próxima.")
-        
-        # Adiciona uma pausa para não sobrecarregar a API do Google
-        print("Aguardando 5 segundos antes da próxima requisição...")
-        time.sleep(5)
+            if trends_df is not None and not trends_df.empty:
+                print("3. Salvando dados no banco...")
+                salvar_dados_no_banco(trends_df, categoria, GEOLOCATION, DB_FILE)
+            else:
+                print(f"Nenhum dado encontrado para a categoria '{categoria}'. Pulando para a próxima.")
+            
+            # Adiciona uma pausa para não sobrecarregar a API do Google
+            print("Aguardando 5 segundos antes da próxima requisição...")
+            time.sleep(5)
 
-    print("\nProcesso de coleta concluído.")
+        print("\nProcesso de coleta concluído.")
+    except Exception as e:
+        print(f"ERRO FATAL DURANTE A COLETA: {e}")
+        # Re-levanta a exceção para que o dashboard possa capturá-la e exibi-la.
+        raise e
 
 # --- Bloco de Execução Principal ---
 if __name__ == "__main__":
