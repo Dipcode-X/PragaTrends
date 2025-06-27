@@ -8,6 +8,8 @@ e armazenados no banco de dados SQLite.
 import sqlite3
 import pandas as pd
 import sys
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import os
 
