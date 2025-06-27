@@ -22,7 +22,7 @@ CATEGORIAS_PRAGAS = {
     'Ratos': ['rato', 'ratazana'],
     'Baratas': ['barata', 'barata de esgoto'],
     'Formigas': ['formiga', 'formiga cortadeira'],
-    'Escorpioes': ['escorpião', 'lacraia'],
+    'Escorpiões': ['escorpião', 'escorpião amarelo', 'escorpião marrom'],
     'Aranhas': ['aranha', 'aranha marrom', 'armadeira']
 }
 GEOLOCATION = 'BR'
